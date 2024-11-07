@@ -3,7 +3,7 @@ import cors from 'cors'
 
 // import utils
 import { getAllData,getSpesificTodo } from './model/getdata.js'
-import { postTodo } from './model/mutation.js'
+import { postTodo,deleteTodo } from './model/mutation.js'
 import { responseJSON } from './utils/response.js'
 
 
@@ -54,10 +54,32 @@ app.post('/todo', async (req,res)=>{
         }
         // post data
         let data = await  postTodo(req.body.todolist)
-        responseJSON(req,res,400,true,[],'berhasil mengambil data')
+        responseJSON(req,res,400,true,[],'berhasil mengirim data')
     }
     catch(err){
         console.log('error bro')
+        responseJSON(req,res,500,false,[],err.message)
+    }
+})
+
+//! query delete data
+app.delete('/todo/:id', async (req,res)=>{
+    try{
+        // check jika tidka mengirim field todolist di http body
+        if(req.params.id === undefined) {
+            throw new Error('wajib mengirim parameter id')
+        }
+        let [result,_] = await  getSpesificTodo(req.params.id)
+        // check jika data tidak ada
+        if(result?.length === 0){
+            responseJSON(req,res,404,true,[],'data tidak ditemukan')
+            return 
+        }
+        // delete data
+        let data = await deleteTodo(req.params.id)
+        responseJSON(req,res,400,true,[],'berhasil menghapus data')
+    }
+    catch(err){
         responseJSON(req,res,500,false,[],err.message)
     }
 })

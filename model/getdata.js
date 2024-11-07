@@ -9,8 +9,8 @@ async function getAllData(){
 
 // utils get spesifik data by id
 async function getSpesificTodo(id) {
-    let [result,fields] = await  connection.query(`SELECT * FROM daftar_todolist where id = ?`,[id])
-    return [result,fields]
+    let [results,fields] = await  connection.query(`SELECT * FROM daftar_todolist where id = ?`,[id])
+    return [results,fields]
 }
 
 export {getAllData,getSpesificTodo}
