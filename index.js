@@ -4,6 +4,8 @@ import cors from 'cors'
 // import utils
 import { getAllData } from './model/getdata.js'
 import { responseJSON } from './utils/response.js'
+
+
 const app = express()
 const port = 3000
 
@@ -18,7 +20,7 @@ app.use(express.json())
 // GET TODO
 app.get('/todo',async (req,res)=>{
     try{
-        const [results,fields] = await getAllData()
+        const [results,_] = await getAllData()
         responseJSON(req,res,400,true,results,'berhasil mengambil data')
     }
     catch(err){
