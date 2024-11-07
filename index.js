@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 // import utils
-import { getAllData } from './model/getdata.js'
+import { getAllData,getSpesificTodo } from './model/getdata.js'
 import { responseJSON } from './utils/response.js'
 
 
@@ -21,6 +21,22 @@ app.use(express.json())
 app.get('/todo',async (req,res)=>{
     try{
         const [results,_] = await getAllData()
+        responseJSON(req,res,400,true,results,'berhasil mengambil data')
+    }
+    catch(err){
+        responseJSON(req,res,500,false,[],err.message)
+    }
+})
+
+//! get todo by id 
+app.get('/todo/:id',async (req,res)=>{
+    let {id} = req.params
+    try{
+        const [results,_] = await getSpesificTodo(id)
+        // chek jika resulst tidak ada
+        if(results.length === 0) {
+            return responseJSON(req,res,400,true,results,'data tidak ditemukan')
+        }
         responseJSON(req,res,400,true,results,'berhasil mengambil data')
     }
     catch(err){
