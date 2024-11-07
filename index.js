@@ -3,6 +3,7 @@ import cors from 'cors'
 
 // import utils
 import { getAllData,getSpesificTodo } from './model/getdata.js'
+import { postTodo } from './model/mutation.js'
 import { responseJSON } from './utils/response.js'
 
 
@@ -40,6 +41,23 @@ app.get('/todo/:id',async (req,res)=>{
         responseJSON(req,res,400,true,results,'berhasil mengambil data')
     }
     catch(err){
+        responseJSON(req,res,500,false,[],err.message)
+    }
+})
+
+//! query post data todo
+app.post('/todo', async (req,res)=>{
+    try{
+        // check jika tidka mengirim field todolist di http body
+        if(req.body.todolist === undefined) {
+            throw new Error('wajib mengirim field todolist')
+        }
+        // post data
+        let data = await  postTodo(req.body.todolist)
+        responseJSON(req,res,400,true,[],'berhasil mengambil data')
+    }
+    catch(err){
+        console.log('error bro')
         responseJSON(req,res,500,false,[],err.message)
     }
 })
