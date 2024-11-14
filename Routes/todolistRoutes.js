@@ -1,19 +1,14 @@
 
 import express from 'express'
-
 // import utils
 import { getAllData,getSpesificTodo,getUser } from '../model/getdata.js'
 import { postTodo,deleteTodo } from '../model/mutation.js'
 import { responseJSON } from '../utils/response.js'
 import checkUser from '../utils/checkUser.js'
 
-
 const RouterTodo = express.Router();
 
-
-
-
-//! GET TODO
+//! GET ALL TODO
 RouterTodo.get('/:idUser',checkUser,async (req,res)=>{
     let {idUser} = req.params
     try{
@@ -46,15 +41,14 @@ RouterTodo.get('/:idUser/:idTodo',checkUser,async (req,res)=>{
 RouterTodo.post('/:idUser',checkUser, async (req,res)=>{
     try{
         // check jika tidka mengirim field todolist di http body
-        if(req.body.todolist === undefined) {
-            throw new Error('wajib mengirim field todolist')
+        if(req.body.todolist === undefined || req.body.userId === undefined) {
+            throw new Error('wajib mengirim field todolist dan userId')
         }
         // post data
-        let data = await  postTodo(req.body.todolist)
+        let data = await  postTodo(req.body.userId,req.body.todolist)
         responseJSON(req,res,400,true,[],'berhasil mengirim data')
     }
     catch(err){
-        console.log('error bro')
         responseJSON(req,res,500,false,[],err.message)
     }
 })

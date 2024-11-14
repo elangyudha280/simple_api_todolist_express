@@ -2,7 +2,6 @@ import { getUser } from "../model/getdata.js"
 
 async function checkUser(req,res,next){
     let {idUser} = req.params
-    console.log('middleware check user todo')
     try{
         const [results,_] = await getUser(idUser)
         console.log(results)
