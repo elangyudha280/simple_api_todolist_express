@@ -1,14 +1,15 @@
-import { getUser } from "../model/getdata.js"
+import { getSpesificTodo } from "../model/getdata.js";
 
-async function checkUser(req,res,next){
-    let {idUser} = req.params
+
+async function checkDataTodo(req,res,next){
+    let {idUser,idTodo} = req.params
     try{
-        const [results,_] = await getUser(idUser)
-        // check jika user tidak ditemukan
+        const [results,_] = await getSpesificTodo(idUser,idTodo)
+        // check jika todo tidak ditemukan
         if(results.length === 0 ){
             res.status(404).json({
                 success:false,
-                message:'user tidak ditemukan'
+                message:'todo tidak ditemukan'
             })
             return
         }
@@ -23,4 +24,4 @@ async function checkUser(req,res,next){
     }
 }
 
-export default checkUser
+export default checkDataTodo;

@@ -90,5 +90,5 @@ app.use((req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log(`server port ${port} is running`)
+    return port
 })
