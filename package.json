@@ -1,6 +1,6 @@
 {
   "name": "api_simple_todolist",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "latihan membuat API todolist",
   "main": "index.js",
   "type": "module",
